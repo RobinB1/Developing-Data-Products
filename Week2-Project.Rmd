@@ -1,0 +1,28 @@
+---
+title: "Data Products Week 2 -Project - *Wellington Regions Cities*"
+author: "Robin"
+date: "21 April 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+#options(viewer = NULL)
+options(internet.info = 0)
+library(leaflet)
+```
+
+```{r mapnz, echo = FALSE, fig.cap = "Cities in the Wellington (NZ) Region",fig.align = 'left', message = FALSE} 
+wn_cities <- data.frame(name = c("Wellington", "Lower Hutt", "Porirua", "Upper Hutt"), 
+                         pop = c(190956,98238,51717,40179), 
+                         lat = c(-41.28664,-41.21667,-41.13333,-41.11667), 
+                         lng = c(174.77557,174.91667,174.85,175.06667))
+
+map = wn_cities
+   leaflet() %>%
+   addTiles() %>% 
+   setView(lng = 174.91667, lat = -41.21667, zoom = 10) %>%
+   addCircles(weight = 1, radius = sqrt(wn_cities$pop)*10,color = c("blue", "red", "green", "yellow"),lng = map$lng, lat = map$lat) %>% 
+   addMarkers(map$lng, map$lat,popup = paste(sample(wn_cities$pop))) %>% 
+   addLegend(labels = c("Wellington", "Lower Hutt", "Porirua", "Upper Hutt"), colors = c("blue", "red", "green", "yellow"), title = "Region Cities")
+```
